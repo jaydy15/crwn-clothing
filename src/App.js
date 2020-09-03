@@ -9,9 +9,12 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/SignInAndSignUpPage
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.action';
+import { selectCurrentUser } from './redux/user/user.selectors';
+import { createStructuredSelector } from 'reselect';
+import Checkout from './pages/checkout/Checkout';
 
 class App extends React.Component {
-  unsubscribeFormAuth = null;
+  unsubscribeFromAuth = null;
 
   componentDidMount() {
     const { setCurrentUser } = this.props;
@@ -33,16 +36,17 @@ class App extends React.Component {
   }
 
   componentWillUnmount() {
-    this.unsubscribeFormAuth();
+    this.unsubscribeFromAuth();
   }
 
   render() {
     return (
-      <Fragment>
+      <div>
         <Header />
         <Switch>
           <Route exact path='/' component={Homepage} />
           <Route path='/shop' component={ShopPage} />
+          <Route exact path='/checkout' component={Checkout} />
           <Route
             exact
             path='/signin'
@@ -55,7 +59,7 @@ class App extends React.Component {
             }
           />
         </Switch>
-      </Fragment>
+      </div>
     );
   }
 }
